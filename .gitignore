@@ -1,0 +1,23 @@
+# 가상환경 · 캐시
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# 모델 가중치 (첫 분석 때 자동으로 받음)
+*.pt
+
+# 작업물 — 영상·프로젝트 파일은 저장소에 올리지 않는다
+*.fbproj
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.m4v
+runs/
+
+# 개인 설정
+.claude/
+.DS_Store
+.idea/
+.vscode/

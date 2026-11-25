@@ -1,0 +1,25 @@
+# 축구 중계 영상에 맞춘 BoT-SORT 설정.
+#
+# 기본 bytetrack 대비 실측(대형.mp4, 301프레임):
+#   트랙 74→44개, 30프레임 미만 파편 42→16개, 끝까지 유지 9→12개, 속도 22→17.5fps
+#
+# 핵심은 gmc_method(글로벌 모션 보정)다. 중계 카메라가 팬/줌 하면 화면 전체가 흐르는데
+# bytetrack 은 이를 보정하지 않아 정지한 선수도 '움직인' 것으로 보고 매칭에 실패한다.
+#
+# ReID(with_reid)는 켜 봤지만 파편이 오히려 늘고 속도는 절반이 됐다. 유니폼이 같은
+# 선수끼리 외형이 거의 구분되지 않아 도움이 안 된다.
+tracker_type: botsort
+
+track_high_thresh: 0.2    # 1차 매칭 문턱 — 낮춰서 약한 탐지도 트랙에 붙인다
+track_low_thresh: 0.05    # 2차 매칭 — 가려진 선수 회수용
+new_track_thresh: 0.4     # 새 트랙 생성은 까다롭게 → 파편 감소
+track_buffer: 90          # 놓친 트랙을 3초까지 살려둔다 (겹침·가림 대비)
+match_thresh: 0.85
+fuse_score: True
+
+gmc_method: sparseOptFlow # 카메라 움직임 보정 — 중계 영상에서 가장 큰 효과
+
+proximity_thresh: 0.4
+appearance_thresh: 0.7
+with_reid: False
+model: auto
